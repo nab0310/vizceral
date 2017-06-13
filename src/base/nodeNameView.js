@@ -72,7 +72,7 @@ class NodeNameView extends BaseView {
     const getDefaultDisplayName = () => truncate(this.nodeName);
     if (getDefault) { return getDefaultDisplayName(); }
 
-    const showFullDisplayName = this.highlight || this.nodeView.focused;
+    const showFullDisplayName = True;
     return showFullDisplayName ? this.nodeName : getDefaultDisplayName();
   }
 
