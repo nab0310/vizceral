@@ -41,10 +41,6 @@ function roundRect (context, x, y, w, h, radius, strokeColor, fillColor) {
   context.stroke();
 }
 
-function truncate (name) {
-  return name;
-}
-
 class NodeNameView extends BaseView {
   constructor (nodeView, fixedWidth) {
     super(nodeView.object);
@@ -69,11 +65,7 @@ class NodeNameView extends BaseView {
   }
 
   getDisplayName (getDefault) {
-    const getDefaultDisplayName = () => truncate(this.nodeName);
-    if (getDefault) { return getDefaultDisplayName(); }
-
-    const showFullDisplayName = True;
-    return showFullDisplayName ? this.nodeName : getDefaultDisplayName();
+    return this.nodeName;
   }
 
   updateLabel () {
