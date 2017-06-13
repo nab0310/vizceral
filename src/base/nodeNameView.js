@@ -42,9 +42,6 @@ function roundRect (context, x, y, w, h, radius, strokeColor, fillColor) {
 }
 
 function truncate (name) {
-  if (name.length > 18) {
-    return `${name.substr(0, 7)}…${name.substr(-7)}`;
-  }
   return name;
 }
 
