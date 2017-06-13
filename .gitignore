@@ -7,7 +7,6 @@ bower_components
 
 # Generated files
 npm-debug.log
-/dist
 *.map
 .jshintignore
 .jshintrc
