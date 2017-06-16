@@ -41,6 +41,10 @@ function roundRect (context, x, y, w, h, radius, strokeColor, fillColor) {
   context.stroke();
 }
 
+function truncate (name) {
+  return name;
+}
+
 class NodeNameView extends BaseView {
   constructor (nodeView, fixedWidth) {
     super(nodeView.object);
@@ -65,12 +69,16 @@ class NodeNameView extends BaseView {
   }
 
   getDisplayName (getDefault) {
-    return this.nodeName;
+    const getDefaultDisplayName = () => truncate(this.nodeName);
+    if (getDefault) { return getDefaultDisplayName(); }
+
+    const showFullDisplayName = this.highlight || this.nodeView.focused;
+    return showFullDisplayName ? this.nodeName : getDefaultDisplayName();
   }
 
   updateLabel () {
     const context = this.nameCanvas.getContext('2d');
-    const fontSize = this.fixedWidth ? 22 : 18;
+    const fontSize = 25;
 
     const font = `${fontSize}px 'Source Sans Pro', sans-serif`;
     context.font = font;
@@ -117,14 +125,22 @@ class NodeNameView extends BaseView {
 
   applyPosition () {
     let x;
-    const y = this.nodeView.object.graphRenderer === 'global' ? 80 : 0;
+    let y = this.nodeView.object.graphRenderer === 'global' ? 80 : 0;
 
-    // Prioritize left side if node is left of center, right side if node is right of center
-    if (this.nodeView.labelPositionLeft) {
+    if (this.nodeView.object.labelBelow) {
+      y = this.nodeView.radius;
+      // x = 0 - this.nodeView.radius - (this.labelWidth / 2) - this.buffer;
+      x = 0;
+    } else if (this.nodeView.object.labelAbove) {
+      y = -this.nodeView.radius;
+      // x = this.nodeView.radius + (this.labelWidth / 2) + this.buffer;
+      x = 0;
+    } else if (this.nodeView.labelPositionLeft) {
+      // Prioritize left side if node is left of center, right side if node is right of center
       // Put the label to the left of the node
       x = 0 - this.nodeView.radius - (this.labelWidth / 2) - this.buffer;
     } else {
-      // Put the label to the right of the node
+        // Put the label to the right of the node
       x = this.nodeView.radius + (this.labelWidth / 2) + this.buffer;
     }
 
