@@ -30,6 +30,8 @@ class Node extends GraphObject {
     this.minimumNoticeLevel = 0;
     this.entryNode = entryNode;
 
+    this.labelBelow = false;
+    this.labelAbove = false;
     this.graphRenderer = renderer;
     this.position = this.position || {};
     this.position.x = this.position.x || 0;
@@ -136,6 +138,14 @@ class Node extends GraphObject {
 
     if (!this.outgoingVolume[key]) { this.validateOutgoingVolume(); }
     return this.outgoingVolume[key];
+  }
+
+  makeLabelBelow () {
+    this.labelBelow = true;
+  }
+
+  makeLabelAbove () {
+    this.labelAbove = true;
   }
 
   updatePosition (position, depth) {
